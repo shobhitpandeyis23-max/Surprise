@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine, Ritu?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ff69b4, #ffb6c1);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #yes {
+            background-color: #ff1493;
+            color: white;
+            transform: scale(1);
+        }
+        #no {
+            background-color: #dc143c;
+            color: white;
+            position: absolute;
+        }
+        .gifts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .gift {
+            position: absolute;
+            animation: float 5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        #song-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .proposal-page {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .gift-selection {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .gift-option {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            width: 250px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gift-option:hover {
+            transform: scale(1.05);
+        }
+        .selected {
+            background: #ff1493 !important;
+            color: white;
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 2em;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body id="main-page">
+    <h1>Happy Valentine's Day, Ritu! 💖</h1>
+    <p>Will you be my Valentine? I've been waiting for this moment...</p>
+    
+    <div class="buttons">
+        <button id="yes">Yes! 😍</button>
+        <button id="no">No 😢</button>
+    </div>
+    
+    <!-- Fun Gift Elements -->
+    <div class="gifts">
+        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Heart" class="gift" style="top: 10%; left: 10%; width: 50px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909937.png" alt="Rose" class="gift" style="top: 20%; right: 15%; width: 50px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png" alt="Chocolate" class="gift" style="bottom: 30%; left: 20%; width: 50px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Teddy Bear" class="gift" style="bottom: 10%; right: 10%; width: 50px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Heart" class="gift" style="top: 50%; left: 50%; width: 40px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909937.png" alt="Rose" class="gift" style="top: 70%; right: 30%; width: 40px;">
+    </div>
+    
+    <!-- Proposal Accepted Page -->
+    <div id="proposal-page" class="proposal-page">
+        <h1>Yay! You Said Yes! 💕</h1>
+        <p>Ritu, you've made me the happiest person ever. Now, let's make this Valentine's Day unforgettable. Choose your 3 favorite gifts below!</p>
+        <button id="continue-to-gifts">Continue to Gifts 🎁</button>
+        <div class="hearts">
+            <!-- Dynamically add hearts -->
+        </div>
+    </div>
+    
+    <!-- Gift Selection Page -->
+    <div id="gift-selection" class="gift-selection">
+        <h1>Pick Your 3 Gifts, Ritu! 🎉</h1>
+        <p>Select up to 3 gifts you'd love to receive:</p>
+        <div class="gift-options">
+            <div class="gift-option" data-gift="1">🍫 A Box of Gourmet Chocolates – Sweet treats to melt your heart!</div>
+            <div class="gift-option" data-gift="2">🧸 A Cuddly Teddy Bear – For all the hugs we can't share yet!</div>
+            <div class="gift-option" data-gift="3">🌹 A Bouquet of Red Roses – Classic romance, just for you.</div>
+            <div class="gift-option" data-gift="4">🍽️ A Romantic Dinner Date – Candlelit and special, planned just for us.</div>
+            <div class="gift-option" data-gift="5">💍 A Promise Ring – Symbolizing our forever love.</div>
+            <div class="gift-option" data-gift="6">🎶 A Playlist of Our Songs – Curated with all the tunes that remind me of you.</div>
+        </div>
+        <button id="finalize">I've Chosen My Gifts! 🎶</button>
+        <div id="song-container">
+            <iframe id="song" width="0" height="0" src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <script>
+        let yesScale = 1;
+        let noClicks = 0;
+        const yesBtn = document.getElementById('yes');
+        const noBtn = document.getElementById('no');
+        const mainPage = document.getElementById('main-page');
+        const proposalPage = document.getElementById('proposal-page');
+        const giftSelection = document.getElementById('gift-selection');
+        const continueBtn = document.getElementById('continue-to-gifts');
+        const finalizeBtn = document.getElementById('finalize');
+        const songContainer = document.getElementById('song-container');
+        const giftOptions = document.querySelectorAll('.gift-option');
+        let selectedGifts = [];
+        
+        // Make Yes button bigger on No hover/click
+        noBtn.addEventListener('mouseover', () => {
+            yesScale += 0.2;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            noClicks++;
+            if (noClicks > 3) {
+                noBtn.style.display = 'none'; // Hide No button after a few tries
+            } else {
+                // Move No button randomly
+                noBtn.style.left = Math.random() * 80 + '%';
+                noBtn.style.top = Math.random() * 80 + '%';
+            }
+        });
+        
+        noBtn.addEventListener('click', () => {
+            yesScale += 0.3;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            noClicks++;
+            if (noClicks > 3) {
+                noBtn.style.display = 'none';
+            }
+        });
+        
+        // On Yes click: Show proposal page
+        yesBtn.addEventListener('click', () => {
+            mainPage.style.display = 'none';
+            proposalPage.style.display = 'flex';
+            // Add falling hearts animation
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                document.querySelector('.hearts').appendChild(heart);
+            }
+        });
+        
+        // Continue to gift selection
+        continueBtn.addEventListener('click', () => {
+            proposalPage.style.display = 'none';
+            giftSelection.style.display = 'flex';
+        });
+        
+        // Gift selection logic (up to 3)
+        giftOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const giftId = option.dataset.gift;
+                if (selectedGifts.includes(giftId)) {
+                    // Deselect
+                    selectedGifts = selectedGifts.filter(id => id !== giftId);
+                    option.classList.remove('selected');
+                } else if (selectedGifts.length < 3) {
+                    // Select
+                    selectedGifts.push(giftId);
+                    option.classList.add('selected');
+                } else {
+                    alert("You can only select 3 gifts! Deselect one first.");
+                }
+            });
+        });
+        
+        // Finalize and play song
+        finalizeBtn.addEventListener('click', () => {
+            if (selectedGifts.length === 3) {
+                songContainer.style.display = 'block';
+                alert("Perfect choices, Ritu! Now, let's listen to 'Perfect' by Ed Sheeran while I plan these for you. I love you! 💖");
+                // The iframe will autoplay the song
+            } else {
+                alert("Please select exactly 3 gifts!");
+            }
+        });
+    </script>
+</body>
+</html>
