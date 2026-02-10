@@ -12,7 +12,6 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -184,17 +183,34 @@
         const giftOptions = document.querySelectorAll('.gift-option');
         let selectedGifts = [];
         
-        // Make Yes button bigger on No hover/click
+        // Function to move No button safely within screen
+        function moveNoButton() {
+            const maxLeft = window.innerWidth - noBtn.offsetWidth - 20; // Keep 20px margin
+            const maxTop = window.innerHeight - noBtn.offsetHeight - 20;
+            noBtn.style.left = Math.random() * maxLeft + 'px';
+            noBtn.style.top = Math.random() * maxTop + 'px';
+        }
+        
+        // Make Yes button bigger on No hover/click (with mobile touch support)
         noBtn.addEventListener('mouseover', () => {
             yesScale += 0.2;
             yesBtn.style.transform = `scale(${yesScale})`;
             noClicks++;
             if (noClicks > 3) {
-                noBtn.style.display = 'none'; // Hide No button after a few tries
+                noBtn.style.display = 'none';
             } else {
-                // Move No button randomly
-                noBtn.style.left = Math.random() * 80 + '%';
-                noBtn.style.top = Math.random() * 80 + '%';
+                moveNoButton();
+            }
+        });
+        
+        noBtn.addEventListener('touchstart', () => { // For mobile taps
+            yesScale += 0.2;
+            yesBtn.style.transform = `scale(${yesScale})`;
+            noClicks++;
+            if (noClicks > 3) {
+                noBtn.style.display = 'none';
+            } else {
+                moveNoButton();
             }
         });
         
@@ -204,6 +220,8 @@
             noClicks++;
             if (noClicks > 3) {
                 noBtn.style.display = 'none';
+            } else {
+                moveNoButton();
             }
         });
         
